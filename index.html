@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sistema de Control de Acceso</title>
     <style>
         * {
@@ -15,6 +15,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #1a1a2e;
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         .presentation {
@@ -27,7 +28,7 @@
             width: 100%;
             height: 100%;
             display: none;
-            padding: 60px 80px;
+            padding: 40px 80px 140px 80px;
             background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
             color: white;
             position: absolute;
@@ -60,6 +61,7 @@
             align-items: center;
             text-align: center;
             background: linear-gradient(135deg, #0066CC 0%, #003d7a 100%);
+            padding: 30px 80px 140px 80px !important;
         }
 
         .portada h1 {
@@ -82,222 +84,7 @@
         }
 
         .robot-icon {
-            font-size: 120px;
-            margin: 30px 0;
-        }
-
-        /* Headers */
-        h1 {
-            font-size: 48px;
-            margin-bottom: 30px;
-            color: #00d4ff;
-            border-bottom: 3px solid #00d4ff;
-            padding-bottom: 15px;
-        }
-
-        h2 {
-            font-size: 32px;
-            margin: 25px 0 15px 0;
-            color: #00d4ff;
-        }
-
-        h3 {
-            font-size: 24px;
-            margin: 20px 0 10px 0;
-            color: #4dd4ff;
-        }
-
-        /* Content */
-        .content {
-            flex: 1;
-            overflow-y: auto;
-        }
-
-        p, li {
-            font-size: 20px;
-            line-height: 1.6;
-            margin: 15px 0;
-            color: #e0e0e0;
-        }
-
-        ul {
-            margin-left: 30px;
-        }
-
-        li {
-            margin: 12px 0;
-        }
-
-        .objetivo-general {
-            background: rgba(0, 212, 255, 0.1);
-            padding: 20px;
-            border-left: 4px solid #00d4ff;
             margin: 20px 0;
-            border-radius: 5px;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 20px 0;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 25px;
-            border-radius: 10px;
-            border: 1px solid rgba(0, 212, 255, 0.3);
-        }
-
-        .highlight {
-            color: #00d4ff;
-            font-weight: bold;
-        }
-
-        .icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        /* Navigation */
-        .nav-buttons {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-        }
-
-        button {
-            background: #00d4ff;
-            color: #0f3460;
-            border: none;
-            padding: 12px 30px;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background: #00b8e6;
-            transform: translateY(-2px);
-        }
-
-        button:disabled {
-            background: #555;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .impacto-box {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(22, 160, 133, 0.1) 100%);
-            padding: 25px;
-            border-radius: 10px;
-            border-left: 5px solid #16a085;
-            margin: 20px 0;
-        }
-
-        .team-member {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            border: 2px solid rgba(0, 212, 255, 0.3);
-        }
-
-        .team-member h3 {
-            color: #00d4ff;
-            margin-bottom: 10px;
-        }
-
-        .component-list {
-            background: rgba(0, 102, 204, 0.1);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 15px 0;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #1a1a2e;
-            overflow: hidden;
-        }
-
-        .presentation {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-        }
-
-        .slide {
-            width: 100%;
-            height: 100%;
-            display: none;
-            padding: 60px 80px 120px 80px;
-            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
-            color: white;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .slide.active {
-            display: flex;
-            flex-direction: column;
-            animation: slideIn 0.5s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .slide-number {
-            position: absolute;
-            bottom: 30px;
-            right: 40px;
-            font-size: 18px;
-            color: #00d4ff;
-        }
-
-        /* Slide 1 - Portada */
-        .portada {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(135deg, #0066CC 0%, #003d7a 100%);
-        }
-
-        .portada h1 {
-            font-size: 56px;
-            margin-bottom: 20px;
-            color: #00d4ff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .portada h2 {
-            font-size: 28px;
-            margin-bottom: 40px;
-            color: #e0e0e0;
-        }
-
-        .portada .info {
-            font-size: 22px;
-            margin: 10px 0;
-            color: #ffffff;
-        }
-
-        .robot-icon {
-            margin: 30px 0;
         }
 
         .robot-face {
@@ -644,13 +431,305 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* RESPONSIVE STYLES */
+                    @media screen and (max-width: 768px) {
+            .slide {
+                padding: 30px 20px 100px 20px;
+            }
+
+            .portada {
+                padding: 20px 20px 100px 20px !important;
+            }
+
+            .portada h1 {
+                font-size: 32px;
+                margin-bottom: 15px;
+            }
+
+            .portada h2 {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            .portada .info {
+                font-size: 14px;
+                margin: 5px 0;
+            }
+
+            .portada img {
+                width: 150px;
+                height: auto;
+            }
+
+            .robot-face {
+                width: 120px;
+                height: 120px;
+            }
+
+            .robot-head {
+                width: 100px;
+                height: 120px;
+            }
+
+            .robot-eye {
+                width: 25px;
+                height: 25px;
+                top: 35px;
+            }
+
+            .robot-eye.left {
+                left: 18px;
+            }
+
+            .robot-eye.right {
+                right: 18px;
+            }
+
+            h1 {
+                font-size: 28px;
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+            }
+
+            h2 {
+                font-size: 22px;
+                margin: 15px 0 10px 0;
+            }
+
+            h3 {
+                font-size: 18px;
+                margin: 10px 0 8px 0;
+            }
+
+            p, li {
+                font-size: 14px;
+                line-height: 1.5;
+                margin: 10px 0;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                margin: 15px 0;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            .objetivo-general {
+                padding: 15px;
+            }
+
+            .impacto-box {
+                padding: 15px;
+            }
+
+            .component-list {
+                padding: 15px;
+            }
+
+            .progress-path {
+                flex-wrap: wrap;
+                gap: 15px;
+                margin: 20px 0;
+            }
+
+            .progress-line {
+                display: none;
+            }
+
+            .progress-step {
+                flex: 0 0 45%;
+            }
+
+            .step-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .step-label {
+                font-size: 12px;
+            }
+
+            .objective-item {
+                padding: 12px 12px 12px 50px;
+            }
+
+            .objective-number {
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+                left: 10px;
+            }
+
+            .goal-icon {
+                font-size: 32px;
+            }
+
+            .slide-number {
+                bottom: 15px;
+                right: 20px;
+                font-size: 14px;
+            }
+
+            .nav-buttons {
+                bottom: 15px;
+                gap: 10px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            ul {
+                margin-left: 20px;
+            }
+
+            .team-member {
+                padding: 15px;
+            }
+
+            .team-member img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .icon {
+                font-size: 30px;
+            }
+
+            figure img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            figcaption {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .slide {
+                padding: 20px 15px 90px 15px;
+            }
+
+            .portada {
+                padding: 15px 15px 90px 15px !important;
+            }
+
+            .portada h1 {
+                font-size: 24px;
+            }
+
+            .portada h2 {
+                font-size: 16px;
+            }
+
+            .portada .info {
+                font-size: 12px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            h3 {
+                font-size: 16px;
+            }
+
+            p, li {
+                font-size: 13px;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+                gap: 8px;
+                width: calc(100% - 40px);
+                max-width: 300px;
+            }
+
+            button {
+                width: 100%;
+                padding: 12px 15px;
+            }
+
+            .progress-step {
+                flex: 0 0 100%;
+            }
+
+            .content {
+                padding-bottom: 20px;
+            }
+        }
+
+        /* Landscape mobile */
+        @media screen and (max-height: 500px) and (orientation: landscape) {
+            .slide {
+                padding: 15px 30px 80px 30px;
+            }
+
+            h1 {
+                font-size: 22px;
+                margin-bottom: 10px;
+            }
+
+            h2 {
+                font-size: 18px;
+                margin: 10px 0 8px 0;
+            }
+
+            h3 {
+                font-size: 16px;
+            }
+
+            p, li {
+                font-size: 13px;
+                margin: 8px 0;
+            }
+
+            .nav-buttons {
+                bottom: 10px;
+            }
+
+            .portada h1 {
+                font-size: 24px;
+            }
+
+            .portada h2 {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+            .portada .info {
+                font-size: 12px;
+                margin: 3px 0;
+            }
+
+            .robot-face {
+                width: 80px;
+                height: 80px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="presentation">
         <!-- Slide 1: Portada -->
         <div class="slide active portada">
-            <!-- <div class="robot-icon">🤖</div>-->            
             <img src="Robot.svg" alt="Conjunto residencial" width="300" height="200">
             <h1>Sistema de Control de Acceso</h1>
             <h2>Departamento de Industrial<br>Especialidad Robótica</h2>
@@ -666,13 +745,12 @@
         <!-- Slide 2: Planteamiento del Problema -->
         <div class="slide">
             <h1>🎯 Planteamiento del Problema</h1>
+            <div class="content">
                 <div class="impacto-box">
                     <p><strong>💡 Necesidad:</strong> Desarrollar un sistema de control de acceso tecnológicamente robusto pero económicamente accesible para comunidades de estratos medios.</p>
-<img src="https://media.gettyimages.com/id/1263019784/photo/friendly-security-guard-working-at-a-gated-neighborhood-and-opening-the-door.jpg?s=1024x1024&w=gi&k=20&c=dIbqJmkDbSoJX8F8BO6RQW0nCJVDLphrSm89AOW3098=" alt="Conjunto residencial" width="300" height="200">
+                    <img src="https://media.gettyimages.com/id/1263019784/photo/friendly-security-guard-working-at-a-gated-neighborhood-and-opening-the-door.jpg?s=1024x1024&w=gi&k=20&c=dIbqJmkDbSoJX8F8BO6RQW0nCJVDLphrSm89AOW3098=" alt="Conjunto residencial" width="300" height="200">
                 </div>
-                
 
-            <div class="content">
                 <p><strong>Contexto:</strong> Conjuntos residenciales de estratos medios en Pasto, Nariño</p>
                 
                 <h3>Problemáticas Identificadas:</h3>
@@ -682,7 +760,6 @@
                     <li><span class="highlight">Limitaciones tecnológicas:</span> Sistemas comerciales cuestan entre $1.5M - $5M pesos</li>
                     <li><span class="highlight">Falta de trazabilidad:</span> No hay registro confiable de ingresos y salidas</li>
                 </ul>
-
             </div>
             <div class="slide-number">2/12</div>
         </div>
@@ -802,7 +879,7 @@
                                     <img src="control-remoto-ir.jpg" alt="control-remoto-ir" width="150" height="250">                                    
                                     </figure>
                                 </li>
-                                 <li>
+                                <li>
                                     <figure>
                                     <figcaption>Sensor infrarrojo VS1338B</figcaption>
                                     <img src="sensor-infrarrojo.jpg" alt="sensor-infrarrojo.jpg" width="100" height="150">                                    
@@ -867,7 +944,7 @@
                     </ul>
                     <p><strong>Protocolos:</strong> I2C (pantalla OLED), SPI (sensor RFID), PWM (servos), IR (control remoto)</p>
                 </div>
-                 <div class="card">
+                <div class="card">
                     <img src="codigo-arduino-ide.png" alt="codigo-arduino-ide" width="800" height="500">
                 </div>
             </div>
@@ -875,7 +952,7 @@
         </div>
 
         <!-- Slide 7: Impacto y Beneficios -->
-           <div class="slide" style="background: linear-gradient(135deg, #2d5016 0%, #1a3d0a 100%);">
+        <div class="slide" style="background: linear-gradient(135deg, #2d5016 0%, #1a3d0a 100%);">
             <h1>🌟 Impacto y Beneficios</h1>
             <div class="content">
                 <h2>Beneficios Económicos:</h2>
@@ -1091,6 +1168,30 @@
             if (e.key === 'ArrowLeft') changeSlide(-1);
             if (e.key === 'ArrowRight') changeSlide(1);
         });
+
+        // Touch navigation for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                // Swipe left
+                changeSlide(1);
+            }
+            if (touchEndX > touchStartX + 50) {
+                // Swipe right
+                changeSlide(-1);
+            }
+        }
 
         // Initialize
         showSlide(currentSlide);
