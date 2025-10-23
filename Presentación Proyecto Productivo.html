@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Control de Acceso</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 60px 80px;
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 18px;
+            color: #00d4ff;
+        }
+
+        /* Slide 1 - Portada */
+        .portada {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0066CC 0%, #003d7a 100%);
+        }
+
+        .portada h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            color: #00d4ff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .portada h2 {
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: #e0e0e0;
+        }
+
+        .portada .info {
+            font-size: 22px;
+            margin: 10px 0;
+            color: #ffffff;
+        }
+
+        .robot-icon {
+            font-size: 120px;
+            margin: 30px 0;
+        }
+
+        /* Headers */
+        h1 {
+            font-size: 48px;
+            margin-bottom: 30px;
+            color: #00d4ff;
+            border-bottom: 3px solid #00d4ff;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 32px;
+            margin: 25px 0 15px 0;
+            color: #00d4ff;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin: 20px 0 10px 0;
+            color: #4dd4ff;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        p, li {
+            font-size: 20px;
+            line-height: 1.6;
+            margin: 15px 0;
+            color: #e0e0e0;
+        }
+
+        ul {
+            margin-left: 30px;
+        }
+
+        li {
+            margin: 12px 0;
+        }
+
+        .objetivo-general {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 20px;
+            border-left: 4px solid #00d4ff;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .highlight {
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            background: #00d4ff;
+            color: #0f3460;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #00b8e6;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .impacto-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(22, 160, 133, 0.1) 100%);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #16a085;
+            margin: 20px 0;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .team-member h3 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        .component-list {
+            background: rgba(0, 102, 204, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 60px 80px 120px 80px;
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 18px;
+            color: #00d4ff;
+        }
+
+        /* Slide 1 - Portada */
+        .portada {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #0066CC 0%, #003d7a 100%);
+        }
+
+        .portada h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            color: #00d4ff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .portada h2 {
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: #e0e0e0;
+        }
+
+        .portada .info {
+            font-size: 22px;
+            margin: 10px 0;
+            color: #ffffff;
+        }
+
+        .robot-icon {
+            margin: 30px 0;
+        }
+
+        .robot-face {
+            width: 180px;
+            height: 180px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .robot-head {
+            width: 140px;
+            height: 160px;
+            background: linear-gradient(135deg, #c0c0c0 0%, #808080 100%);
+            border-radius: 50% 50% 45% 45%;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 -5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .robot-eye {
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle at 30% 30%, #00d4ff, #0066cc);
+            border-radius: 50%;
+            position: absolute;
+            top: 50px;
+            box-shadow: 0 0 20px #00d4ff, inset 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: eyeGlow 2s infinite alternate;
+        }
+
+        @keyframes eyeGlow {
+            0% { box-shadow: 0 0 20px #00d4ff, inset 0 0 10px rgba(255, 255, 255, 0.5); }
+            100% { box-shadow: 0 0 30px #00d4ff, 0 0 40px #00b8e6, inset 0 0 15px rgba(255, 255, 255, 0.7); }
+        }
+
+        .robot-eye.left {
+            left: 25px;
+        }
+
+        .robot-eye.right {
+            right: 25px;
+        }
+
+        .eye-pupil {
+            width: 15px;
+            height: 15px;
+            background: #001a33;
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .robot-mouth {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px #00d4ff;
+        }
+
+        .robot-jaw {
+            width: 100px;
+            height: 30px;
+            background: linear-gradient(135deg, #a0a0a0 0%, #606060 100%);
+            border-radius: 0 0 50% 50%;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .robot-antenna {
+            width: 3px;
+            height: 25px;
+            background: linear-gradient(180deg, #808080, #c0c0c0);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .antenna-tip {
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #00d4ff, #0066cc);
+            border-radius: 50%;
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px #00d4ff;
+            animation: antennaBlink 1.5s infinite;
+        }
+
+        @keyframes antennaBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .face-detail {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .detail-1 { top: 35px; }
+        .detail-2 { top: 120px; }
+
+        /* Headers */
+        h1 {
+            font-size: 48px;
+            margin-bottom: 30px;
+            color: #00d4ff;
+            border-bottom: 3px solid #00d4ff;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 32px;
+            margin: 25px 0 15px 0;
+            color: #00d4ff;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin: 20px 0 10px 0;
+            color: #4dd4ff;
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        p, li {
+            font-size: 20px;
+            line-height: 1.6;
+            margin: 15px 0;
+            color: #e0e0e0;
+        }
+
+        ul {
+            margin-left: 30px;
+        }
+
+        li {
+            margin: 12px 0;
+        }
+
+        .objetivo-general {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 20px;
+            border-left: 4px solid #00d4ff;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .highlight {
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            background: #00d4ff;
+            color: #0f3460;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #00b8e6;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .impacto-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(22, 160, 133, 0.1) 100%);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #16a085;
+            margin: 20px 0;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .team-member h3 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        .component-list {
+            background: rgba(0, 102, 204, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        /* Progress Path */
+        .progress-path {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            right: 5%;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #0066cc);
+            z-index: 0;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .progress-step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #00d4ff, #0066cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 10px;
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+            border: 4px solid #0f3460;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .step-label {
+            font-size: 14px;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .objective-item {
+            background: rgba(0, 212, 255, 0.05);
+            padding: 15px 15px 15px 60px;
+            border-left: 4px solid #00d4ff;
+            margin: 15px 0;
+            border-radius: 5px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .objective-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .objective-number {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #00d4ff, #0066cc);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 3px 10px rgba(0, 212, 255, 0.4);
+        }
+
+        .goal-icon {
+            font-size: 48px;
+            margin: 15px 0;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Portada -->
+        <div class="slide active portada">
+            <!-- <div class="robot-icon">🤖</div>-->            
+            <img src="Robot.svg" alt="Conjunto residencial" width="300" height="200">
+            <h1>Sistema de Control de Acceso</h1>
+            <h2>Departamento de Industrial<br>Especialidad Robótica</h2>
+            <div class="info"><strong>Johan Steven Castañeda Tovar</strong></div>
+            <div class="info"><strong>Deisy Nayibe Gutiérrez</strong></div>
+            <div class="info">Grado 11-7. Grupo 6</div>
+            <div class="info"><img src="escudoinem.webp" alt="Escudo INEM" width="80" height="80"></div>
+            <div class="info">I.E.M. INEM Luis Delfín Insuasty</div>
+            <div class="info">Pasto, Nariño - 2025</div>
+            <div class="slide-number">1/12</div>
+        </div>
+
+        <!-- Slide 2: Planteamiento del Problema -->
+        <div class="slide">
+            <h1>🎯 Planteamiento del Problema</h1>
+                <div class="impacto-box">
+                    <p><strong>💡 Necesidad:</strong> Desarrollar un sistema de control de acceso tecnológicamente robusto pero económicamente accesible para comunidades de estratos medios.</p>
+<img src="https://media.gettyimages.com/id/1263019784/photo/friendly-security-guard-working-at-a-gated-neighborhood-and-opening-the-door.jpg?s=1024x1024&w=gi&k=20&c=dIbqJmkDbSoJX8F8BO6RQW0nCJVDLphrSm89AOW3098=" alt="Conjunto residencial" width="300" height="200">
+                </div>
+                
+
+            <div class="content">
+                <p><strong>Contexto:</strong> Conjuntos residenciales de estratos medios en Pasto, Nariño</p>
+                
+                <h3>Problemáticas Identificadas:</h3>
+                <ul>
+                    <li><span class="highlight">Seguridad deficiente:</span> Sistemas manuales propensos a errores y falsificaciones</li>
+                    <li><span class="highlight">Ineficiencia operativa:</span> Dependencia de personal 24/7 genera altos costos</li>
+                    <li><span class="highlight">Limitaciones tecnológicas:</span> Sistemas comerciales cuestan entre $1.5M - $5M pesos</li>
+                    <li><span class="highlight">Falta de trazabilidad:</span> No hay registro confiable de ingresos y salidas</li>
+                </ul>
+
+            </div>
+            <div class="slide-number">2/12</div>
+        </div>
+
+        <!-- Slide 3: Objetivos -->
+        <div class="slide">
+            <h1>🎯 Objetivos del Proyecto</h1>
+            <div class="content">
+                <div class="objetivo-general">
+                    <div class="goal-icon">🎯</div>
+                    <h3>Objetivo General:</h3>
+                    <p>Diseñar, construir e implementar un sistema electrónico de control de acceso automatizado para conjuntos residenciales, integrando tecnología RFID, teclado numérico y control remoto infrarrojo mediante ESP32-S3, mejorando la seguridad, comodidad y eficiencia en el control de ingreso.</p>
+                </div>
+
+                <h3>Objetivos Específicos:</h3>
+                
+                <div class="progress-path">
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <div class="step-icon">📐</div>
+                        <div class="step-label">Diseño</div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="step-icon">🚶</div>
+                        <div class="step-label">Peatonal</div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="step-icon">🚗</div>
+                        <div class="step-label">Vehicular</div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="step-icon">💻</div>
+                        <div class="step-label">Programación</div>
+                    </div>
+                </div>
+
+                <div class="objective-item">
+                    <div class="objective-number">1</div>
+                    <p><strong>Diseñar</strong> la arquitectura completa del sistema con componentes electrónicos y protocolos de comunicación (I2C, SPI)</p>
+                </div>
+
+                <div class="objective-item">
+                    <div class="objective-number">2</div>
+                    <p><strong>Implementar</strong> subsistema de acceso peatonal con teclado matricial y sensor RFID con retroalimentación visual y sonora</p>
+                </div>
+
+                <div class="objective-item">
+                    <div class="objective-number">3</div>
+                    <p><strong>Desarrollar</strong> subsistema de acceso vehicular mediante control remoto infrarrojo</p>
+                </div>
+
+                <div class="objective-item">
+                    <div class="objective-number">4</div>
+                    <p><strong>Programar</strong> ESP32-S3 aprovechando arquitectura doble-núcleo para optimizar rendimiento</p>
+                </div>
+            </div>
+            <div class="slide-number">3/12</div>
+        </div>
+
+        <!-- Slide 4: Descripción del Prototipo -->
+        <div class="slide">
+            <h1>🔧 Descripción del Prototipo</h1>
+            <div class="content">
+                <p><strong>Tipo:</strong> Prototipo funcional</p>
+                <img src="prototipo.png" alt="prototipo" width="400" height="300">
+                <p><strong>Nombre:</strong> SecurePass Systems</p>
+                <p><strong>Función principal:</strong> Control automatizado de acceso peatonal y vehicular en conjuntos residenciales mediante múltiples métodos de autenticación.</p>
+
+                <div class="component-list">
+                    <h3>Componentes Principales:</h3>
+                    <div class="grid-2">
+                        <div>
+                            <ul>
+                                <li>
+                                    <figure>
+                                    <figcaption>ESP32-S3-DevKitC-1</figcaption>
+                                    <img src="ESP32-S3.png" alt="ESP32-S3" width="300" height="200">
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                    <figcaption>Sensor RFID RC522</figcaption>
+                                    <img src="SensorRFID.jpg" alt="SensorRFID" width="300" height="200">                                    
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                    <figcaption>Teclado matricial 4x4</figcaption>
+                                    <img src="teclado4x4.jpg" alt="teclado4x4" width="300" height="200">                                    
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                    <figcaption>Pantalla OLED 0.96"</figcaption>
+                                    <img src="pantalla-oled.jpg" alt="pantalla-oled" width="300" height="200">                                    
+                                    </figure>
+                                </li>                             
+                            </ul>
+                        </div>
+                        <div>
+                            <ul>
+                                <li>
+                                    <figure>
+                                    <figcaption>Servomotor SG90</figcaption>
+                                    <img src="servo-sg90.jpg" alt="servo-sg90" width="300" height="200">                                    
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                    <figcaption>Servomotor ES08AII</figcaption>
+                                    <img src="servo-ES08AII.png" alt="servo-ES08AII" width="300" height="200">                                    
+                                    </figure>
+                                </li>
+                                <li>
+                                    <figure>
+                                    <figcaption>Control remoto IR</figcaption>
+                                    <img src="control-remoto-ir.jpg" alt="control-remoto-ir" width="150" height="250">                                    
+                                    </figure>
+                                </li>
+                                 <li>
+                                    <figure>
+                                    <figcaption>Sensor infrarrojo VS1338B</figcaption>
+                                    <img src="sensor-infrarrojo.jpg" alt="sensor-infrarrojo.jpg" width="100" height="150">                                    
+                                    </figure>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">4/12</div>
+        </div>
+
+        <!-- Slide 5: Funcionamiento Parte 1 -->
+        <div class="slide">
+            <h1>⚙️ Funcionamiento - Entrada</h1>
+            <div class="content">
+                <h2>Sistema de Control Peatonal:</h2>
+                
+                <div class="card">
+                    <h3>🔢 Método 1: Teclado Numérico</h3>
+                    <p><strong>Entrada:</strong> Usuario ingresa código de 4 dígitos (ej: 1012)</p>
+                    <p><strong>Proceso:</strong> ESP32 compara código ingresado con contraseña almacenada</p>
+                    <p><strong>Salida:</strong> Si es correcto → Servo abre puerta + LED enciende + Buzzer suena 1 vez</p>
+                    <p><strong>Seguridad:</strong> Bloqueo automático después de 5 intentos fallidos por 1 minuto</p>
+                </div>
+
+                <div class="card">
+                    <h3>📱 Método 2: Tarjeta/Llavero RFID</h3>
+                    <p><strong>Entrada:</strong> Usuario acerca tarjeta RFID al sensor (2-4 cm)</p>
+                    <p><strong>Proceso:</strong> Sensor lee UID único de tarjeta y ESP32 lo compara con tarjetas autorizadas</p>
+                    <p><strong>Salida:</strong> Si está autorizada → Misma respuesta que teclado</p>
+                </div>
+                <div class="card">
+                    <img src="prototipo-on.png" alt="prototipo-on" width="600" height="400">
+                </div>
+            </div>
+            <div class="slide-number">5/12</div>
+        </div>
+
+        <!-- Slide 6: Funcionamiento Parte 2 -->
+        <div class="slide">
+            <h1>⚙️ Funcionamiento - Proceso</h1>
+            <div class="content">
+                <h2>Sistema de Control Vehicular:</h2>
+                
+                <div class="card">
+                    <h3>🚗 Control Remoto Infrarrojo</h3>
+                    <p><strong>Entrada:</strong> Usuario presiona botón del control remoto</p>
+                    <p><strong>Proceso:</strong> Sensor VS1338B detecta señal IR, ESP32 decodifica comando</p>
+                    <p><strong>Salida:</strong> Servo vehicular abre/cierra barrera según botón presionado</p>
+                    <p><strong>Alcance:</strong> Hasta 4 metros en interiores</p>
+                </div>
+
+                <h2>Programación:</h2>
+                <div class="card">
+                    <p><strong>Lenguaje:</strong> C++ en Arduino IDE 2.3.6</p>
+                    <p><strong>Arquitectura:</strong> Procesamiento doble-núcleo del ESP32-S3</p>
+                    <ul>
+                        <li>Core 1: Maneja acceso peatonal (teclado + RFID + pantalla)</li>
+                        <li>Core 1: Maneja acceso vehicular (control remoto)</li>
+                    </ul>
+                    <p><strong>Protocolos:</strong> I2C (pantalla OLED), SPI (sensor RFID), PWM (servos), IR (control remoto)</p>
+                </div>
+                 <div class="card">
+                    <img src="codigo-arduino-ide.png" alt="codigo-arduino-ide" width="800" height="500">
+                </div>
+            </div>
+            <div class="slide-number">6/12</div>
+        </div>
+
+        <!-- Slide 7: Impacto y Beneficios -->
+           <div class="slide" style="background: linear-gradient(135deg, #2d5016 0%, #1a3d0a 100%);">
+            <h1>🌟 Impacto y Beneficios</h1>
+            <div class="content">
+                <h2>Beneficios Económicos:</h2>
+                <div class="impacto-box">
+                    <p>💰 <strong>Reducción de costos del 87-94%</strong> comparado con sistemas comerciales ($250,000 vs $1.5M-$5M)</p>
+                    <p>💡 <strong>ROI menor a 1 mes</strong> comparado con portería tradicional 24/7</p>
+                    <p>🔧 <strong>Mantenimiento económico:</strong> Componentes estándar y fáciles de conseguir</p>
+                </div>
+
+                <h2>Beneficios Sociales:</h2>
+                <div class="impacto-box">
+                    <p>🏘️ <strong>Democratización de la seguridad:</strong> Tecnología accesible para estratos medios</p>
+                    <p>👥 <strong>Inclusión:</strong> Sistema automatizado facilita acceso a personas mayores o con movilidad reducida</p>
+                    <p>🎓 <strong>Desarrollo educativo:</strong> Ejemplo de emprendimiento juvenil exitoso</p>
+                </div>
+
+                <h2>Beneficios Ambientales:</h2>
+                <p>♻️ Bajo consumo energético (< 1W en reposo, ~9 kWh/año)</p>
+                <p>🔄 Diseño modular permite reparación en lugar de reemplazo completo</p>
+            </div>
+            <div class="slide-number">7/12</div>
+        </div>
+
+        <!-- Slide 8: Proceso de Elaboración Parte 1 -->
+        <div class="slide">
+            <h1>🔨 Proceso de Elaboración - Fase 1</h1>
+            <div class="content">
+                <h2>1. Investigación y Planificación (Semanas 1-2):</h2>
+                <ul>
+                    <li>Identificación del problema en conjuntos residenciales de Pasto</li>
+                    <li>Análisis de alternativas: Arduino UNO vs Raspberry Pi vs ESP32-S3</li>
+                    <li>Selección de componentes y elaboración de presupuesto</li>
+                </ul>
+
+                <h2>2. Configuración del Entorno (Semanas 3-4):</h2>
+                <ul>
+                    <li>Instalación de Arduino IDE 2.3.6 y drivers CP210x</li>
+                    <li>Configuración de soporte ESP32 e instalación de librerías</li>
+                    <li>Compra de materiales en tiendas locales de Pasto</li>
+                </ul>
+
+                <h2>3. Desarrollo de Componentes (Semanas 5-7):</h2>
+                <ul>
+                    <li>Prueba individual de cada sensor y actuador</li>
+                    <li>Calibración de servomotores y sensores</li>
+                    <li>Programación de interfaces y lógica básica</li>
+                </ul>
+            </div>
+            <div class="slide-number">8/12</div>
+        </div>
+
+        <!-- Slide 9: Proceso de Elaboración Parte 2 -->
+        <div class="slide">
+            <h1>🔨 Proceso de Elaboración - Fase 2</h1>
+            <div class="content">
+                <h2>4. Integración de Subsistemas (Semanas 8-10):</h2>
+                <ul>
+                    <li>Integración teclado + OLED + servo peatonal</li>
+                    <li>Integración RFID + sistema peatonal</li>
+                    <li>Implementación procesamiento doble-núcleo</li>
+                    <li>Resolución de conflictos de pines y recursos</li>
+                </ul>
+
+                <h2>5. Construcción de Maqueta (Semanas 11-12):</h2>
+                <ul>
+                    <li>Diseño y construcción de estructura en cartón paja</li>
+                    <li>Montaje de puertas y mecanismos con servos</li>
+                    <li>Instalación y organización de componentes electrónicos</li>
+                </ul>
+
+                <h2>6. Pruebas Finales (Semanas 13-14):</h2>
+                <ul>
+                    <li>Pruebas de funcionalidad y estrés (8+ horas continuas)</li>
+                    <li>Medición de tiempos de respuesta (0.5-0.8 seg)</li>
+                    <li>Ajustes de ángulos, delays y calibración final</li>
+                    <li>Documentación técnica completa</li>
+                </ul>
+            </div>
+            <div class="slide-number">9/12</div>
+        </div>
+
+        <!-- Slide 10: Conclusiones -->
+        <div class="slide">
+            <h1>✅ Conclusiones</h1>
+            <div class="content">
+                <h2>Aprendizajes Obtenidos:</h2>
+                <ul>
+                    <li>✨ Integración exitosa de múltiples protocolos de comunicación (I2C, SPI, IR, PWM)</li>
+                    <li>💻 Dominio de programación en ESP32 con arquitectura doble-núcleo</li>
+                    <li>🔧 Aplicación práctica de conocimientos en electrónica, programación y diseño</li>
+                    <li>📊 Desarrollo de habilidades en gestión de proyectos y trabajo en equipo</li>
+                    <li>🚀 Demostración de que es posible crear tecnología competitiva en Colombia</li>
+                </ul>
+
+                <h2>Retos Superados:</h2>
+                <ul>
+                    <li>Configuración inicial compleja del ESP32-S3</li>
+                    <li>Resolución de conflictos de recursos entre componentes</li>
+                    <li>Calibración precisa de servomotores y sensores</li>
+                    <li>Optimización de código para procesamiento eficiente</li>
+                </ul>
+
+                <h2>Mejoras Futuras:</h2>
+                <p>🔮 Módulo WiFi + app móvil | 📹 Integración con cámaras | ☁️ Registro en la nube | 👤 Reconocimiento facial</p>
+            </div>
+            <div class="slide-number">10/12</div>
+        </div>
+
+        <!-- Slide 11: Roles del Equipo -->
+        <div class="slide">
+            <h1>👥 Roles del Equipo</h1>
+            <div class="content">
+                <div class="grid-2">
+                    <div class="team-member">
+                        <img src="foto-johan.png" alt="foto-johan" width="150" height="150">
+                        <h3>Johan Steven Castañeda Tovar</h3>
+                        <p><strong>Roles:</strong></p>
+                        <ul style="text-align: left; margin-left: 20px;">
+                            <li>Programación del ESP32-S3</li>
+                            <li>Integración de componentes electrónicos</li>
+                            <li>Configuración de protocolos de comunicación</li>
+                            <li>Documentación técnica</li>
+                            <li>Pruebas y depuración de código</li>
+                        </ul>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="icon">👩‍🔧</div>
+                        <h3>Deisy Nayibe Gutiérrez</h3>
+                        <p><strong>Roles:</strong></p>
+                        <ul style="text-align: left; margin-left: 20px;">
+                            <li>Diseño de circuitos electrónicos</li>
+                            <li>Construcción de maqueta física</li>
+                            <li>Ensamblaje de componentes</li>
+                            <li>Pruebas de sistema completo</li>
+                            <li>Análisis de viabilidad comercial</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 30px; text-align: center;">
+                    <h3>🤝 Trabajo Colaborativo</h3>
+                    <p>Ambos integrantes participaron activamente en todas las fases del proyecto, desde la investigación inicial hasta la documentación final, demostrando trabajo en equipo y complementariedad de habilidades.</p>
+                </div>
+            </div>
+            <div class="slide-number">11/12</div>
+        </div>
+
+        <!-- Slide 12: Agradecimientos -->
+        <div class="slide">
+            <h1>🙏 Agradecimientos y Referencias</h1>
+            <div class="content">
+                <h2>Agradecimientos:</h2>
+                <div class="card">
+                    <p>🎓 <strong>Profesora Elvia Unigarro</strong> - Asesora del proyecto y docente de Proyecto Productivo en la especialidad de Robótica</p>
+                    <p>🎓 <strong>Profesor Alexander Cuarán</strong> - Asesor del proyecto y docente de diseño y electrónica en la especialidad de Robótica</p>
+                    <p>🎓 <strong>Profesora Yolanda Criollo</strong> - Asesora del proyecto y docente de programación en la especialidad de Robótica</p>
+
+                    <p>🏫 <strong>I.E.M. INEM Luis Delfín Insuasty</strong> - Institución que nos brindó formación y recursos</p>
+                    <p>👨‍👩‍👦 <strong>Nuestras familias</strong> - Por el apoyo económico y motivación constante</p>
+                    <p>💡 <strong>Comunidad Arduino y ESP32</strong> - Por documentación y recursos en línea</p>
+                    <p>🏘️ <strong>Administradores de conjuntos</strong> - Por compartir sus experiencias y necesidades</p>
+                </div>
+
+                <h2>Fuentes de Información:</h2>
+                <ul>
+                    <li>Documentación oficial ESP32 - Espressif Systems</li>
+                    <li>Arduino IDE y librerías de código abierto (GitHub)</li>
+                    <li>Datasheets de componentes electrónicos</li>
+                    <li>Foros especializados: Arduino Forum, ESP32.com</li>
+                    <li>DANE - Estadísticas de seguridad en Colombia</li>
+                </ul>
+
+                <div style="text-align: center; margin-top: 30px; padding: 20px; background: rgba(0, 212, 255, 0.1); border-radius: 10px;">
+                    <h3 style="color: #00d4ff;">SecurePass Systems</h3>
+                    <p>"Tu seguridad, nuestra tecnología"</p>
+                </div>
+            </div>
+            <div class="slide-number">12/12</div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button id="prevBtn" onclick="changeSlide(-1)">◀ Anterior</button>
+            <button id="nextBtn" onclick="changeSlide(1)">Siguiente ▶</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            if (n >= totalSlides) currentSlide = totalSlides - 1;
+            if (n < 0) currentSlide = 0;
+            
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Initialize
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
